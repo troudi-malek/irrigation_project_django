@@ -5,9 +5,26 @@ class Crop(models.Model):
     water_need=models.DecimalField(max_digits=5,decimal_places=2)
     growth_stage = models.CharField(max_length=50)
     optimal_temperature = models.CharField(max_length=50)
-
-
     def __str__(self):
         return self.name
-
-# Create your models here.
+    
+class Field(models.Model):
+    SOIL_TYPES = [
+        ('sandy', 'Sandy'),
+        ('clay', 'Clay'),
+        ('silt', 'Silt'),
+        ('loam', 'Loam'),
+        ('peat', 'Peat'),
+        ('chalk', 'Chalk'),
+        ('gravel', 'Gravel'),
+    ]
+    location = models.CharField(max_length=100)
+    area_size = models.DecimalField(max_digits=6, decimal_places=2)
+    soil_quality = models.CharField(
+        max_length=50,
+        choices=SOIL_TYPES,
+        default='loam'
+    )
+    crop=models.ForeignKey(Crop,on_delete=models.CASCADE, related_name='fields',null=True)
+    def __str__(self):
+        return self.name
