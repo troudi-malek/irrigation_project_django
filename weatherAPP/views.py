@@ -1,8 +1,8 @@
 # views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from .service import get_weather_data, calculate_irrigation_needs
-from .models import WeatherData
-from .forms import WeatherDataForm
+from .models import WeatherData, IrrigationPlan
+from .forms import WeatherDataForm,IrrigationPlanForm  
 
 
 
@@ -70,10 +70,16 @@ def irrigation_plan_list(request):
     irrigation_plans = IrrigationPlan.objects.all()
     return render(request, 'Admin/IrrigationPlan/home.html', {'irrigation_plans': irrigation_plans})
 
+from datetime import datetime
+
 def add_irrigation_plan(request):
     if request.method == 'POST':
         form = IrrigationPlanForm(request.POST)
         if form.is_valid():
+            # Get the raw start_time input and convert to time object
+            start_time_str = request.POST.get('start_time')  # Expecting HH:MM format
+            start_time = datetime.strptime(start_time_str, '%H:%M').time()  # Change format here
+
             weather_data = form.cleaned_data['weather_data']
             water_amount = calculate_irrigation_needs({
                 'main': {
@@ -86,6 +92,7 @@ def add_irrigation_plan(request):
             })
             irrigation_plan = form.save(commit=False)
             irrigation_plan.water_amount = water_amount  # Calculate water amount
+            irrigation_plan.start_time = start_time  # Set the start time to the parsed value
             irrigation_plan.save()
             return redirect('irrigation_plan_list')  # Redirect to the list view
     else:
@@ -96,18 +103,20 @@ def add_irrigation_plan(request):
         'form': form,
         'weather_data_list': weather_data_list
     })
-
+    
+    
 def update_irrigation_plan(request, id):
     irrigation_plan = get_object_or_404(IrrigationPlan, id=id)
     if request.method == 'POST':
         form = IrrigationPlanForm(request.POST, instance=irrigation_plan)
         if form.is_valid():
             form.save()
-            return redirect('irrigation_plan_list')  # Redirect after successful save
+            return redirect('irrigation_plan_list')  # Redirect to the irrigation plan list or a success page
     else:
         form = IrrigationPlanForm(instance=irrigation_plan)
 
     return render(request, 'Admin/IrrigationPlan/update_irrigation_plan.html', {'form': form, 'irrigation_plan': irrigation_plan})
+
 
 def delete_irrigation_plan(request, id):
     irrigation_plan = get_object_or_404(IrrigationPlan, id=id)

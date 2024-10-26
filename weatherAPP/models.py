@@ -9,7 +9,7 @@ class WeatherData(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"WeatherData for {self.city} at {self.timestamp}"
+     return f"{self.city} at {self.timestamp.strftime('%H:%M, %d %B %Y')}"
 
 
 class IrrigationPlan(models.Model):

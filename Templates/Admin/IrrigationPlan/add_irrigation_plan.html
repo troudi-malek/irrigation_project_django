@@ -10,12 +10,31 @@
   <link rel="shortcut icon" type="image/png" href="{% static '/Admin/images/logos/favicon.png' %}"/>
   <link rel="stylesheet" href="{% static '/Admin/css/styles.min.css' %}" />
   <link rel="stylesheet" href="{% static '/Admin/css/bootstrap.min.css' %}">
+  <style>
+      /* Custom CSS to center the form */
+      .form-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: calc(100vh - 200px); /* Adjust based on header/footer heights */
+          padding: 20px;
+      }
+      .form-wrapper {
+          width: 100%;
+          max-width: 600px; /* Limit the width of the form */
+          background-color: #fff; /* Optional: Background color for contrast */
+          padding: 30px; /* Add some padding */
+          border-radius: 8px; /* Optional: Rounded corners */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow effect */
+      }
+  </style>
 </head>
 
 <body>
   <!-- Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
+    
     <!-- Sidebar Start -->
     <aside class="left-sidebar">
       <div>
@@ -140,52 +159,65 @@
           </div>
         </nav>
       </header>
-      
-      <div class="container my-5">
-        <h1 class="text-center mb-4">Weather Information</h1>
-    
-        <div class="card">
-            <div class="card-body">
-                <h2>Add Weather Data</h2>
-                <br>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <input type="text" name="city" class="form-control" placeholder="Enter city name" required>
-                        <button class="btn btn-primary" type="submit">Send Weather</button>
-                    </div>
-                </form>
-    
-                {% if error %}
-                    <p class="error-message text-danger">{{ error }}</p>
-                {% elif weather_data %}
-                    <div class="weather-summary mt-3">
-                        <h2 class="h5">Weather in {{ weather_data.name }}</h2>
-                        <p>Temperature: <strong>{{ weather_data.main.temp }}°C</strong></p>
-                        <p>Humidity: <strong>{{ weather_data.main.humidity }}%</strong></p>
-                        <p>Precipitation: <strong>{{ weather_data.rain.1h|default:0 }} mm</strong></p>
-                    </div>
-                    
-                    <!-- Irrigation Need Section -->
-                     <br>
-                     <br>
-                  
-                {% else %}
-                    <p>No weather data available.</p>
-                {% endif %}
-                <a href="{% url 'weather_list' %}" class="btn btn-secondary mb-3">Weather Data  </a>
 
+      <div class="container my-5 form-container">
+        <div class="form-wrapper">
+            <h2>Add Irrigation Plan</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-4">
+                            <label for="weather_data" class="form-label">{{ form.weather_data.label }}</label>
+                            <select name="weather_data" class="form-select" required>
+                                {% for choice in form.weather_data.field.choices %}
+                                    <option value="{{ choice.0 }}" {% if choice.0 == form.weather_data.value %}selected{% endif %}>
+                                        {{ choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="frequency" class="form-label">{{ form.frequency.label }}</label>
+                            <select name="frequency" class="form-select" required>
+                                {% for choice in form.frequency.field.choices %}
+                                    <option value="{{ choice.0 }}" {% if choice.0 == form.frequency.value %}selected{% endif %}>
+                                        {{ choice.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="start_time" class="form-label">Start Time</label>
+                            <input type="time" name="start_time" class="form-control form-control-lg" required>  <!-- Larger input -->
+                            <small class="form-text text-muted">Please enter the time in HH:MM format.</small>
+                        </div>
+                        
+                        <div class="form-group mb-4">
+                            <label for="duration" class="form-label">{{ form.duration.label }}</label>
+                            <input type="number" name="duration" class="form-control" value="{{ form.duration.value }}" required>
+                            <small class="form-text text-muted">Enter the duration in minutes.</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary mt-3">Add Irrigation Plan</button>
+                        <a href="{% url 'irrigation_plan_list' %}" class="btn btn-secondary mt-3">Irrigation Plan</a>
+
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     
-
-      <div class="py-6 px-6 text-center">
-        <p class="mb-0 fs-4">Design and Developed by Louled <a href="" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
-      </div>
+    
+    
+    
+ 
     </div>
   </div>
+  <script src="{% static '/Admin/js/bootstrap.bundle.min.js' %}"></script>
+</body>
 
-  <script src="{% static 'Admin/libs/jquery/dist/jquery.min.js' %}"></script>
-  <script src="{% static 'Admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'Admin/js/sidebarmenu.js' %}"></script
+</html>
