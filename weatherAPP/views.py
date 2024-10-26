@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .service import get_weather_data, calculate_irrigation_needs
 from .models import WeatherData, IrrigationPlan
-from .forms import WeatherDataForm,IrrigationPlanForm  
+from .forms import WeatherDataForm,IrrigationPlanForm ,LocationForm
 
 
 
@@ -122,3 +122,21 @@ def delete_irrigation_plan(request, id):
     irrigation_plan = get_object_or_404(IrrigationPlan, id=id)
     irrigation_plan.delete()
     return redirect('irrigation_plan_list')  # Redirect to the list view
+
+
+def client_weather_list(request):
+    weather_data = WeatherData.objects.all()
+    return render(request, 'Client/Weather/list.html', {'weather_data': weather_data})
+
+
+
+def irrigationNeed(request):
+    cities = WeatherData.objects.values_list('city', flat=True).distinct()
+
+    if request.method == 'POST':
+        city = request.POST.get('city')
+        irrigation_plan = IrrigationPlan.objects.filter(weather_data__city=city).first()
+        water_amount = irrigation_plan.water_amount if irrigation_plan else None
+        return render(request, 'Client/Weather/irrigationNeed.html', {'water_amount': water_amount, 'city': city, 'cities': cities})
+
+    return render(request, 'Client/Weather/irrigationNeed.html', {'cities': cities})

@@ -17,3 +17,7 @@ class IrrigationPlanForm(forms.ModelForm):
         super(IrrigationPlanForm, self).__init__(*args, **kwargs)
         # Ensure the weather_data field is a dropdown (list) of WeatherData instances
         self.fields['weather_data'].queryset = WeatherData.objects.all()
+        
+        
+class LocationForm(forms.Form):
+    city = forms.CharField(label='Enter your location', max_length=100)

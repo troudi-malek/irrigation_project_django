@@ -3,6 +3,9 @@ from .views import fetch_weather
 from .views import weather_list
 from .views import delete_weather
 from .views import update_weather
+from .views import client_weather_list
+from .views import irrigationNeed
+
 from . import views
 
 
@@ -19,10 +22,15 @@ urlpatterns = [
      path('irrigation-plans/create/', views.add_irrigation_plan, name='add_irrigation_plan'),
      path('irrigation-plans/<int:id>/update/', views.update_irrigation_plan, name='update_irrigation_plan'),
      path('irrigation-plans/<int:id>/delete/', views.delete_irrigation_plan, name='delete_irrigation_plan'),
-
-
-
-
-
-
+     
+     
+    path('clientWeather/', client_weather_list, name='client_weather_list'),
+    path('clientWeather/irrigationNeed/', irrigationNeed, name='irrigationNeed'),  # You may keep this if you want to use it separately
 ]
+
+
+
+
+
+
+
