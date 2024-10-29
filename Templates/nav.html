@@ -48,10 +48,11 @@
                      <div class="navbar-area">
                         <nav class="site-navbar">
                            <ul>
-                              <li><a class="active" href="index.html">Home</a></li>
-                              <li><a href="{% url "CropFront" %} ">About</a></li>
-                              <li><a href="service.html">Service</a></li>
-                               <li><a href="Javascript:void(0)">Projects</a></li>
+                              <li><a href="{% url "client" %} ">Home</a></li>
+                              <li><a href="{% url "CropFront" %} ">Crop</a></li>
+                              <li><a href="{% url "client_weather_list" %} ">Weather</a></li>
+                              <li><a href="{% url "plant_list_filtered" %} ">Irrigation Schedule</a></li>
+                        
                                 <li><a href="testimonail.html">Testimonail</a></li>
                               <li><a href="blog.html">Blog</a></li>
                               <li><a href="contact.html">Contact</a></li>

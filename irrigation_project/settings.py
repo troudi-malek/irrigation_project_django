@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'soilCropRecommender',
     'IrrigationSchedule',
-    'weatherAPP'
+    'weatherAPP',
+    'UserApp'
 ]
 
 MIDDLEWARE = [
