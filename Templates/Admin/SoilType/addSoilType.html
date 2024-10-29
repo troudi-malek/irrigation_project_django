@@ -1,0 +1,5 @@
+<form method="post" action="{% url 'soil_type_list' %}">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the entire form -->
+    <button type="submit" class="saveButton">Update Soil Type</button> <!-- Button for updating -->
+</form>
