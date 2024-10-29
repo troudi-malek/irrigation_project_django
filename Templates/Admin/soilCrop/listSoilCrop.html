@@ -1,0 +1,48 @@
+{% include "../index.html" %}
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+      data-sidebar-position="fixed" data-header-position="fixed">
+      <div class="body-wrapper">
+      <!--  Header End -->
+      <div class="container-fluid">
+        <!--  Row 1 -->
+        <table class="table">
+            <form method="post" action="{% url 'ListCrop' %}">
+                {% csrf_token %}
+                <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Water Need</th>
+                    <th>Growth Stage</th>
+                    <th>Optimal Temperature</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    {% if not form.instance.id %}
+                    {% include "Admin/soilCrop/addCrop.html" %}
+                    {% endif %}
+                </tr>
+                {% for crop in crops %}
+                <tr>
+                    {% if form.instance.id == crop.id %}
+                    {% include "Admin/soilCrop/addCrop.html" %}
+                    {% else %}
+                    <td>{{crop.name}}</td>
+                    <td>{{crop.water_need}}</td>
+                    <td>{{crop.growth_stage}}</td>
+                    <td>{{crop.optimal_temperature}}</td>
+                    <td><button class="saveButton" formnovalidate name="edit" value="{{crop.id}}">Edit</button>
+                    <button class="deleteButton" formnovalidate name="delete" value="{{crop.id}}">Delete</button>
+                </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </form>
+        </tbody>
+        </table>
+
+      </div>
+    </div>
+    </div>

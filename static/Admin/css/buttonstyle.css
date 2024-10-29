@@ -1,0 +1,23 @@
+.saveButton{
+    background-color: rgb(11, 162, 11);
+    color: white;
+    padding: 11px;
+    border-style: solid;
+    border-color: blueviolet;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: top;
+  }
+
+  .deleteButton{
+    background-color: rgb(246, 30, 30);
+    color: white;
+    padding: 11px;
+    border-style: solid;
+    border-color: blueviolet;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    vertical-align: top;
+  }
