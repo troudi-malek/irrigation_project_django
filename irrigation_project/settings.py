@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'soilCropRecommender',
+    'weatherAPP'
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'IrrigationProject',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

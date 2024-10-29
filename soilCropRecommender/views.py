@@ -25,6 +25,7 @@ def cropFront(request):
     fields = Field.objects.all()
     context['fields'] = fields
     showpredict=False
+    showvalue=False
     formpredict=PredictionForm()
     if request.method == 'POST':
         if 'save' in request.POST:
@@ -74,16 +75,11 @@ def cropFront(request):
                 Weather_condition=formpredict.cleaned_data.get('WEATHER_CONDITION')
                 soiltype=field.soil_quality
                 croptype=field.crop
-                print('soil type:',soiltype)
-                print('crop type:',croptype)
-                print("Temperature:", temperature)
-                print("Region:", Region)
-                print("Weather Condition:", Weather_condition)
                 result=load_data(request,temperature,Region,Weather_condition,soiltype,croptype)
                 predicted_water_requirement = result['predicted_water_requirement']
                 context['predicted_water_requirement']=predicted_water_requirement
-                print('Predicted Water Requirement:', predicted_water_requirement)
-                return redirect('CropFront')
+                showvalue=True
+                context['showvalue']=showvalue
             else:
                 context['formpredict'] = formpredict
     context['form'] = form
@@ -158,14 +154,6 @@ def load_data(request,temperature,Region,Weather_condition,soiltype,croptype):
         feature_importance = pd.DataFrame({'Feature': features, 'Importance': importance})
         feature_importance = feature_importance.sort_values(by='Importance', ascending=False)
         print(feature_importance)
-
-        plt.figure(figsize=(10, 6))
-        plt.barh(feature_importance['Feature'], feature_importance['Importance'], color='skyblue')
-        plt.xlabel('Importance')
-        plt.title('Feature Importance from Linear Regression Model')
-        plt.grid(axis='x')
-        plt.savefig(os.path.join(settings.MEDIA_ROOT, 'feature_importance.png'))
-        plt.close()
 
         joblib.dump(model, os.path.join(settings.MEDIA_ROOT, 'linear_regression_model.pkl'))
 

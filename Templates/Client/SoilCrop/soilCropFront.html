@@ -7,7 +7,6 @@
           <div class="col-lg-6 col-md-12">
              <div class="titlepage text_align_left">
                 <h2>Welcome to Your Field Management</h2>
-                <h1>{{predicted_water_requirement}}</h1>
                 <p>In this section, you can easily add and manage your fields. Please provide detailed information about your field, including its location, size, and soil type.</p>
              </div>
           </div>
@@ -92,7 +91,12 @@
          </div>
         </div>
         {% endfor %}
-        
+        {% if showvalue %}
+        <div class="d-flex flex-column mt-4">
+         <h2>Recommended Water Requirement :</h2>
+        <p>{{predicted_water_requirement|floatformat:2}} liters per square meter per week is needed to maintain optimal crop hydration."</p>
+        </div>
+        {% endif %}
       </div>
    </div>
 </div>

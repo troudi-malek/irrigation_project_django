@@ -1,0 +1,47 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django Specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Environment Variables
+.env
+
+# Django Migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+env/
+
+# Static and Media Files
+staticfiles/
+media/
+node_modules/
+
+# Coverage and Testing
+.coverage
+*.cover
+.hypothesis/
+.pytest_cache/
+.tox/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
