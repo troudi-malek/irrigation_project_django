@@ -21,7 +21,7 @@ urlpatterns = [
     path('',include('soilCropRecommender.urls')),
     path('',include('IrrigationSchedule.urls')),
     path('weather/',include('weatherAPP.urls')),
-    path('user/', include('UserApp.urls')),
+    path('', include('UserApp.urls')),
 
     
     

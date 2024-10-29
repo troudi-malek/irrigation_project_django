@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
 from django.db import models
 
 class UserManager(BaseUserManager):
@@ -28,6 +28,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='client')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    
+    groups = models.ManyToManyField(
+        Group,
+        related_name="custom_user_groups",  # Avoids conflict with auth.User
+        blank=True
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name="custom_user_permissions",  # Avoids conflict with auth.User
+        blank=True
+    )
 
     objects = UserManager()
 

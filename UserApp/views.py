@@ -1,37 +1,35 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from django.views import View
-from .models import User
-from .forms import UserCreationForm  # We'll create this form next
+from django.contrib.auth.forms import UserCreationForm
+from .forms import CreateUserForm
+from django.contrib import messages
+from django.contrib.auth import authenticate,login,logout
 
-class RegisterView(View):
-    def get(self, request):
-        form = UserCreationForm()
-        return render(request, 'Admin/User/register.html', {'form': form})
+def Login(request):
+    if request.method == 'POST':
+         username = request.POST.get('username')
+         password = request.POST.get('password')
+         user = authenticate(request, username=username, password=password)
+         if user is not None:
+                 login(request, user)
+                 return redirect('client')
+         else:
+                  messages.info(request, 'Username OR password is incorrect')
 
-    def post(self, request):
-        form = UserCreationForm(request.POST)
+    context={}
+    return render(request, 'auth/login.html', context)
+
+def logout(request):
+     logout(request)
+     return redirect('login')
+
+def Register(request):
+    form=UserCreationForm()
+    if request.method =='POST':
+        form=CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  # Change this to your desired redirect
-        return render(request, 'Admin/User/register.html', {'form': form})
-
-class LoginView(View):
-    def get(self, request):
-        return render(request, 'accounts/login.html')
-
-    def post(self, request):
-        email = request.POST['email']
-        password = request.POST['password']
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home')  # Change this to your desired redirect
-        else:
-            return render(request, 'Admin/User/login.html', {'error': 'Invalid credentials'})
-
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return redirect('login')  # Change this to your desired redirect
+            form.save()
+            user=form.cleaned_data.get('username')
+            messages.success(request,'account was created for ',context)
+            return redirect('login')
+    context={'form':form}
+    return render(request, 'auth/register.html', context)

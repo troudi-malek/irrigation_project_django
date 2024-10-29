@@ -7,4 +7,5 @@ urlpatterns = [
     path('Dashboard/',views.Dashboard),
     path('Dashboard/ListCrop/',views.ListCrop,name='ListCrop'),
     path('train-model/', views.load_data, name='train_model'),
+    
 ]

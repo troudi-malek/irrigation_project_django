@@ -30,6 +30,13 @@
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+      <style>
+         .hello-msg{
+           font-size: 18px;
+           color: #fff;
+           margin-right: 20px;
+         }
+       </style>
    </head>
    <!-- body -->
    <body class="main-layout">
@@ -65,8 +72,8 @@
                   </div>
                   <div class="col-md-2 padd_0 d_none">
                      <ul class="email text_align_right">
-                        <li><a href="Javascript:void(0)">Login</a>
-                        </li>
+                        <span class="hello-msg">Hello, {{request.user}}</span>
+  <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
                         <li><a href="Javascript:void(0)"><i class="fa fa-search" aria-hidden="true"></i>
                            </a>
                         </li>
