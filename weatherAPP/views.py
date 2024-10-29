@@ -3,6 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .service import get_weather_data, calculate_irrigation_needs
 from .models import WeatherData, IrrigationPlan
 from .forms import WeatherDataForm,IrrigationPlanForm ,LocationForm
+from .data_processing import get_weather_data_for_clustering
+import joblib
+import pandas as pd
+
 
 
 
@@ -140,3 +144,20 @@ def irrigationNeed(request):
         return render(request, 'Client/Weather/irrigationNeed.html', {'water_amount': water_amount, 'city': city, 'cities': cities})
 
     return render(request, 'Client/Weather/irrigationNeed.html', {'cities': cities})
+
+
+
+
+
+def city_clustering_view(request):
+    kmeans = joblib.load("kmeans_climate_model.pkl")
+
+    data = get_weather_data_for_clustering()
+
+    data["cluster"] = kmeans.predict(data[["temperature", "humidity", "precipitation", "irrigation_need"]])
+
+    clusters = {}
+    for cluster_id in sorted(data["cluster"].unique()):
+        clusters[cluster_id] = data[data["cluster"] == cluster_id]["city"].tolist()
+
+    return render(request, "Admin/Weather/clusters.html", {"clusters": clusters})

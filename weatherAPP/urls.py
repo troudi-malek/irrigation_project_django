@@ -5,6 +5,7 @@ from .views import delete_weather
 from .views import update_weather
 from .views import client_weather_list
 from .views import irrigationNeed
+from .views import city_clustering_view
 
 from . import views
 
@@ -25,7 +26,11 @@ urlpatterns = [
      
      
     path('clientWeather/', client_weather_list, name='client_weather_list'),
-    path('clientWeather/irrigationNeed/', irrigationNeed, name='irrigationNeed'),  # You may keep this if you want to use it separately
+    path('clientWeather/irrigationNeed/', irrigationNeed, name='irrigationNeed'), 
+    
+    
+    
+        path('climate_clusters/', views.city_clustering_view, name='climate_clusters'),
 ]
 
 
