@@ -9,17 +9,15 @@
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="{% static '/Admin/images/logos/favicon.png' %}"/>
   <link rel="stylesheet" href="{% static '/Admin/css/styles.min.css' %}" />
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <link rel="stylesheet" href="{% static '/Admin/css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static '/Admin/css/buttonstyle.css' %}">
 
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Sidebar Start -->
-   <aside class="left-sidebar">
+    <aside class="left-sidebar">
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -80,7 +78,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="{% url 'ListCrop'%}" aria-expanded="false">
+              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
                 <span>
                   <i class="ti ti-aperture"></i>
                 </span>
@@ -103,7 +101,7 @@
         <!-- End Sidebar navigation -->
       </div>
       <!-- End Sidebar scroll-->
-    </aside> 
+    </aside>
     <!--  Sidebar End -->
     <!--  Main wrapper -->
     <div class="body-wrapper">
@@ -129,7 +127,7 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="{% static "/Admin/images/profile/user-1.jpg" %}" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
@@ -153,12 +151,95 @@
           </div>
         </nav>
       </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title fw-semibold mb-4">Water By The Season</h5>
+                <a href="{% url 'plant_type_create' %}">Add New Plant Type</a>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="table text-nowrap mb-0 align-middle text-center">
+                  <thead class="text-dark fs-4 border-bottom">
+                    <tr>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Plant Type</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Winter<span class="form-text">(Dec To Feb)</span></h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Sprint<span class="form-text">(Mar To May)</span></h6>
+                        
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Summer<span class="form-text">(Jun To Aug)</span></h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Fall<span class="form-text">(Sep To Nov)</span></h6>
+                        
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Number of Plants</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Plants</h6>
+                      </th>
+                      <th class="border-bottom-0">
+                        <h6 class="fw-semibold mb-0">Actions</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for plant_type in plant_types %}
+                    <tr>
+                      <td class="border-bottom-0">
+                        <div class="d-flex justify-content-center align-content-center">
+                            <img srcset="{% static plant_type.plant_type_image.url %}" alt="{{ plant.plant_type_name }}" width="35" height="35">
+                            <h6 class="fw-semibold mb-0">{{ plant_type.plant_type_name }}</h6>
+                        </div>
+                        
+                    </td>
+                      <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-1">{{ plant_type.winter_irrigation_frequency }}</h6>
+                                               
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{ plant_type.spring_irrigation_frequency }}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{ plant_type.summer_irrigation_frequency }}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{ plant_type.fall_irrigation_frequency }}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <p class="mb-0 fw-normal">{{ plant_type.plant_count }}</p>
+                      </td>
+                      <td class="border-bottom-0">
+                        <a href="{% url 'plant_list' plant_type.id %}">View Plants</a>
+                      </td>
+                      <td class="border-bottom-0">
+                        <a href="{% url 'plant_type_update' plant_type.id  %}">Edit</a> |
+                        <form action="{% url 'plant_type_delete' plant_type.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this plant type?');">Delete</button>
+                        </form>
+                      </td>
+                    </tr> 
+                    {% endfor %}                   
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-      
-
-
   <script src="{% static 'Admin/libs/jquery/dist/jquery.min.js' %}"></script>
   <script src="{% static 'Admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'Admin/js/sidebarmenu.js' %}"></script>
