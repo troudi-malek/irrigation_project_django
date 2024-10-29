@@ -1,5 +1,5 @@
 from django import forms
-from .models import Crop,Field
+from .models import Crop,Field,Prediction
 
 class CropForm(forms.ModelForm):
     class Meta:
@@ -22,3 +22,21 @@ class FieldForm(forms.ModelForm):
             'soil_quality': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select soil quality'}),
             'crop':forms.Select(attrs={'class': 'form-control', 'placeholder': 'Select crop'})
         }
+
+class PredictionForm(forms.ModelForm):
+    class Meta:
+        model = Prediction
+        fields = ['REGION', 'TEMPERATURE', 'WEATHER_CONDITION']
+
+        # Optional: You can add widgets or customize labels
+        widgets = {
+            'TEMPERATURE': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter temperature'}),
+            'REGION': forms.Select(attrs={'class': 'form-control'}),
+            'WEATHER_CONDITION': forms.Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'REGION': 'Region Type',
+            'TEMPERATURE': 'Temperature (°C)',
+            'WEATHER_CONDITION': 'Weather Condition',
+        }
+
