@@ -1,0 +1,66 @@
+<!-- Templates/Client/SoilType/landFront.html -->
+{% include '../../nav.html' %}
+{% load static %}
+
+<div class="about mt-5 mb-5">
+    <div class="container-fluid">
+        <div class="row d_flex">
+            <div class="col-lg-6 col-md-12">
+                <div class="titlepage text_align_left">
+                    <h2>Welcome to Your Land Management</h2>
+                    <p>In this section, you can easily add and manage your lands. Please provide detailed information about your land, including its location, size, and soil type.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="row d_flex">
+                    <div class="col-md-8">
+                        <div class="titlepage">
+                            <h2 class="text_align_center mb-4">Add Your Land Information</h2>
+                            <form method="post" action="{% url 'add_land' %}">
+                                {% csrf_token %}
+                                {% include "Client/SoilType/addLand.html" %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="titlepage text_align_left">
+                    <h2>Your Lands</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            {% for land in lands %}
+            <div class="col-md-4">
+                <div class="latest">
+                    <figure><img src="{% static "images/news3.jpg" %}" alt="#"/></figure>
+                    <span>{{ land.area_size }}<br> 
+                       Hectare
+                    </span>
+                    <div class="nostrud">
+                        <h3>{{ land.location }}</h3>
+                        <p>Soil Type: {{ land.soil_type }}</p>
+                        <form method="post" action="{% url 'edit_land' land.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" name="edit" class="btn btn-primary">Edit</button>
+                        </form>
+                        <form method="post" action="{% url 'delete_land' land.id %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this land?');">
+                            {% csrf_token %}
+                            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include '../../footer.html' %}

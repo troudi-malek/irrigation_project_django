@@ -1,0 +1,18 @@
+{% load static %}
+{% include '../../nav.html' %}  <!-- Include your navigation to ensure styles are loaded -->
+
+<div class="container">
+    <h2>{% if is_editing %}Edit{% else %}Add{% endif %} Land Information</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}  <!-- Render the field itself -->
+            </div>
+        {% endfor %}
+        <button type="submit" class="saveButton">{% if is_editing %}Update{% else %}Add{% endif %} Land</button>
+    </form>
+</div>
+
+{% include '../../footer.html' %}
