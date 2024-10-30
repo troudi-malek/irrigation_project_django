@@ -12,10 +12,14 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import joblib
 import matplotlib.pyplot as plt
+from django.contrib.auth.decorators import login_required
+from UserApp.decorators import unauthenticated_user,allowed_users,admin_only
 
+@login_required(login_url='login')
 def index(request):
     return render(request, 'index.html', {})
 
+@allowed_users(allowed_roles=['admin'])
 def Dashboard(request):
     return render(request, 'Admin/index.html', {})
 
