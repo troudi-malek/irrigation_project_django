@@ -49,6 +49,8 @@
                   <div class=" col-md-2 col-sm-3">
                      <div class="logo">
                         <a href="index.html">Agro<span>Pro</span></a>
+
+                    
                      </div>
                   </div>
                   <div class="col-md-8 col-sm-9">
@@ -60,7 +62,7 @@
                               <li><a href="{% url "client_weather_list" %} ">Weather</a></li>
                               <li><a href="{% url "plant_list_filtered" %} ">Irrigation Schedule</a></li>
                         
-                                <li><a href="testimonail.html">Testimonail</a></li>
+                                <li><a href="{% url "land_list" %}">lands soil type</a></li>
                               <li><a href="blog.html">Blog</a></li>
                               <li><a href="contact.html">Contact</a></li>
                            </ul>
@@ -73,8 +75,11 @@
                   <div class="col-md-2 padd_0 d_none">
                      <ul class="email text_align_right">
                         <span class="hello-msg">Hello, {{request.user}}</span>
+                     
+                    
+
   <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
-                        <li><a href="Javascript:void(0)"><i class="fa fa-search" aria-hidden="true"></i>
+                        <li><a href="Dashbord"><i class="fa fa-search" aria-hidden="true"></i>
                            </a>
                         </li>
                      </ul>

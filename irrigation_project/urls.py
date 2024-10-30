@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,6 +23,9 @@ urlpatterns = [
     path('',include('IrrigationSchedule.urls')),
     path('weather/',include('weatherAPP.urls')),
     path('', include('UserApp.urls')),
+    path('', include('SoilType.urls')),
+    path('', lambda request: redirect('login')),  
+
 
     
     

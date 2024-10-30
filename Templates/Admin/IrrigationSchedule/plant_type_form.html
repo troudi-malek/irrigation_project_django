@@ -4,7 +4,8 @@
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
       data-sidebar-position="fixed" data-header-position="fixed">
         <!--  Header Start -->
-      
+        <div class="body-wrapper">
+          <div class="container-fluid">
         <!--  Header End -->
         <div class="container-fluid">
           <div class="container-fluid">
@@ -20,12 +21,110 @@
                   <div class="card-body">
                     
                     
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{{ action }}</button>
-        <a href="{% url 'plant_type_list' %}">Cancel</a>
-    </form>
+                    <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Plant Type Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="plant_type_name"
+                          name="plant_type_name"
+                          placeholder="Enter plant type name"
+                          value="{{ form.plant_type_name.value|default_if_none:'' }}"
+                        />
+                        {% if form.plant_type_name.errors %}
+                        <div class="error">{{ form.plant_type_name.errors }}</div>
+                        {% endif %}
+                      </div>
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Plant type image</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="plant_type_image"
+                          name="plant_type_image"
+                         
+                          value="{{ form.plant_type_image.value|default_if_none:'' }}"
+                        />
+                       
+                      </div>
+              
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Winter irrigation frequency</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="winter_irrigation_frequency"
+                          name="winter_irrigation_frequency"
+                          placeholder="Enter Winter irrigation frequency"
+                          value="{{ form.winter_irrigation_frequency.value|default_if_none:'' }}"
+                        />
+                        {% if form.winter_irrigation_frequency.errors %}
+                        <div class="error">{{ form.winter_irrigation_frequency.errors }}</div>
+                        {% else %}
+                        <span class="text-sm-center ti-space">Ex:1-2 TIMES PER Month</span>
+                        {% endif %}
+                      </div>
+              
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Spring irrigation frequency</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="spring_irrigation_frequency"
+                          name="spring_irrigation_frequency"
+                          placeholder="Enter Spring irrigation frequency"
+                          value="{{ form.spring_irrigation_frequency.value|default_if_none:'' }}"
+                        />
+                        {% if form.spring_irrigation_frequency.errors %}
+                        <div class="error">{{ form.spring_irrigation_frequency.errors }}</div>
+                        {% else %}
+                        <span class="text-sm-center ti-space">Ex:1-2 TIMES PER Month</span>
+                        {% endif %}
+                      </div>
+              
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Summer irrigation frequency</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="summer_irrigation_frequency"
+                          name="summer_irrigation_frequency"
+                          placeholder="Enter Summer irrigation frequency"
+                          value="{{ form.summer_irrigation_frequency.value|default_if_none:'' }}"
+                        />
+                        {% if form.summer_irrigation_frequency.errors %}
+                        <div class="error">{{ form.summer_irrigation_frequency.errors }}</div>
+                        {% else %}
+                        <span class="text-sm-center ti-space">Ex:1-2 TIMES PER Month</span>
+                        {% endif %}
+                      </div>
+                     
+                      <div class="mb-3">
+                        <label for="name" class="form-label">Fall irrigation frequency</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="fall_irrigation_frequency"
+                          name="fall_irrigation_frequency"
+                          placeholder="Enter Fall irrigation frequency"
+                          value="{{ form.fall_irrigation_frequency.value|default_if_none:'' }}"
+                        />
+                        {% if form.fall_irrigation_frequency.errors %}
+                        <div class="error">{{ form.fall_irrigation_frequency.errors }}</div>
+                        {% else %}
+                        <span class="text-sm-center ti-space">Ex:1-2 TIMES PER Month</span>
+                        {% endif %}
+                      </div>
+              
+                      <div class="btn group_btn">
+                        <button class="btn btn-info" type="submit">{{ action }}</button>
+                        <a class="text-warning" href="{% url 'plant_type_list' %}">Cancel</a>
+                      </div>
+                     
+                  </form>
+              
                   </div>
                 </div>
                 
@@ -34,4 +133,6 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 

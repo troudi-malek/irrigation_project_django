@@ -23,6 +23,11 @@ def index(request):
 def Dashboard(request):
     return render(request, 'Admin/index.html', {})
 
+@login_required
+def some_view(request):
+    is_admin = request.user.groups.filter(name="admin").exists()
+    return render(request, 'client_template.html', {'is_admin': is_admin})
+
 def cropFront(request):
     context = {}
     form = FieldForm()

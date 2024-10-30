@@ -2,13 +2,15 @@
 {% load static %}
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
       data-sidebar-position="fixed" data-header-position="fixed">
+
+      
       <div class="body-wrapper">
         
-
-<div class="card">
+        <div class="container-fluid">
+<div class="card m-5">
   <div class="card-body">
-    <div class="d-flex justify-content-between">
-      <h5 class="card-title fw-semibold mb-4">Water By The Season</h5>
+    <div class="d-flex justify-content-between mt-5">
+      <h5 class="card-title fw-semibold mb-4 mt-5">Water By The Season</h5>
       <a href="{% url 'plant_type_create' %}">Add New Plant Type</a>
     </div>
     
@@ -48,27 +50,27 @@
           {% for plant_type in plant_types %}
           <tr>
             <td class="border-bottom-0">
-              <div class="d-flex justify-content-center align-content-center">
+              <div class="d-flex justify-content-center align-content-center gap-2">
                   <img srcset="{% static plant_type.plant_type_image.url %}" alt="{{ plant.plant_type_name }}" width="35" height="35">
                   <h6 class="fw-semibold mb-0">{{ plant_type.plant_type_name }}</h6>
               </div>
-              
+             
           </td>
             <td class="border-bottom-0">
                 <h6 class="fw-semibold mb-1">{{ plant_type.winter_irrigation_frequency }}</h6>
                                      
             </td>
             <td class="border-bottom-0">
-              <p class="mb-0 fw-normal">{{ plant_type.spring_irrigation_frequency }}</p>
+              <h6 class="fw-semibold mb-1">{{ plant_type.spring_irrigation_frequency }}</h6>
             </td>
             <td class="border-bottom-0">
-              <p class="mb-0 fw-normal">{{ plant_type.summer_irrigation_frequency }}</p>
+              <h6 class="fw-semibold mb-1">{{ plant_type.summer_irrigation_frequency }}</h6>
             </td>
             <td class="border-bottom-0">
-              <p class="mb-0 fw-normal">{{ plant_type.fall_irrigation_frequency }}</p>
+              <h6 class="fw-semibold mb-1">{{ plant_type.fall_irrigation_frequency }}</h6>
             </td>
             <td class="border-bottom-0">
-              <p class="mb-0 fw-normal">{{ plant_type.plant_count }}</p>
+              <h6 class="fw-semibold mb-1">{{ plant_type.plant_count }}</h6>
             </td>
             <td class="border-bottom-0">
               <a href="{% url 'plant_list' plant_type.id %}">View Plants</a>
@@ -80,8 +82,8 @@
                   <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this plant type?');">Delete</button>
               </form>
             </td>
-          </tr> 
-          {% endfor %}                   
+          </tr>
+          {% endfor %}                  
         </tbody>
       </table>
     </div>
@@ -89,3 +91,5 @@
 </div>
 </div>
 </div>
+</div>
+

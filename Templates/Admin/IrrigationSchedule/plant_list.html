@@ -1,18 +1,22 @@
 {% include "../index.html" %}
+{% load static %}
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
       data-sidebar-position="fixed" data-header-position="fixed">
+      <div class="body-wrapper">
+        <div class="container-fluid">
       <div class="container-fluid">
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
+              <!--this-->
               <div class="d-flex justify-content-between">
-                <h5 class="card-title fw-semibold mb-4">Plants for Plant Type {{ plant_type_id }}</h5>
+                <h5 class="card-title fw-semibold mb-4">Plants for Plant Type : {{ plant_type_id }}</h5>
                 <div class="d-flex justify-content-center ">
                     <a href="{% url 'plant_create' plant_type_id %}">Add New Plant</a>|
                     <a href="{% url 'plant_type_list' %}">Plant Type</a>
                 </div>
               </div>
-              
+              <!--endthis-->
               <div class="table-responsive">
                 <table class="table text-nowrap mb-0 align-middle text-center">
                   <thead class="text-dark fs-4 border-bottom">
@@ -25,7 +29,7 @@
                       </th>
                       <th class="border-bottom-0">
                         <h6 class="fw-semibold mb-0">Water Needs</h6>
-                        
+                       
                       </th>
                       <th class="border-bottom-0">
                         <h6 class="fw-semibold mb-0">Growth Rate</h6>
@@ -39,24 +43,24 @@
                     {% for plant in plants %}
                     <tr>
                       <td class="border-bottom-0">
-                        <div class="d-flex justify-content-center align-content-center">
-                          <img srcset="{% static plant.plant_image.url %}" alt="{{ plant.plant_type_name }}" width="35" height="35">
+                        <div class="d-flex justify-content-center align-content-center gap-4">
+                          <img srcset="{% static plant.plant_type.plant_type_image.url %}" alt="{{ plant.plant_type_name }}" width="35" height="35">
                           <h6 class="fw-semibold mb-0">{{ plant.name }}</h6>
-                         
+
                       </div>
                       </td>
                       <td class="border-bottom-0">
-                          <h6 class="fw-semibold mb-1">{{ plant.sunlight_requirements }}</h6>                    
+                          <h6 class="fw-semibold mb-1">{{ plant.sunlight_requirements }} (hours/day)</h6>                    
                       </td>
                       <td class="border-bottom-0">
-                        <p class="mb-0 fw-normal">{{ plant.water_needs }}</p>
+                        <h6 class="fw-semibold mb-1">{{ plant.water_needs }} (liter/m² per week)</h6>
                       </td>
                       <td class="border-bottom-0">
-                        <p class="mb-0 fw-normal">{{ plant.growth_rate }}</p>
+                        <h6 class="fw-semibold mb-1">{{ plant.growth_rate }} (Growth)</h6>
                       </td>
-                      
-                      
-                      
+                     
+                     
+                     
                       <td class="border-bottom-0">
                         <a href="{% url 'plant_update' plant_type_id plant.id  %}">Edit</a> |
                         <form action="{% url 'plant_delete'  plant.id %}" method="post" style="display:inline;">
@@ -64,8 +68,8 @@
                             <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure you want to delete this plant?');">Delete</button>
                         </form>
                       </td>
-                    </tr> 
-                    {% endfor %}                   
+                    </tr>
+                    {% endfor %}                  
                   </tbody>
                 </table>
               </div>
@@ -74,5 +78,7 @@
         </div>
       </div>
       </div>
+    </div>
+  </div>
 
 

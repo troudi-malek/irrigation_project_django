@@ -44,80 +44,107 @@
       <!-- Plant Detail -->
       <!-- about -->
       <div class="about">
-        <div class="container-fluid">
-           <div class="row d_flex m-5">
-              <div class="col-lg-6 col-md-12">
+         <div class="container-fluid">
+            <div class="row d_flex m-5">
+               <div class="col-lg-6 col-md-12">
+                  <div class="titlepage text_align_left">
+                     <span>Plant Details</span>
+                     <h2>{{ plant.name }}</h2>
+                     <p>{{ plant.name }} is a small, with growth rate: {{ plant.growth_rate }} growing plant, and water need: {{ plant.water_needs }} (liter/m² per week).</p>
+                    
+                  </div>
+               </div>
+               <div class="col-lg-6 col-md-12">
+                  <div class="row d_flex">
+                   <div class="col-md-7">
+                     <div class="about_img">
+                        <figure><img srcset="{% static plant.plant_image.url %}" alt="#"/>
+                        </figure>
+                     </div>
+                   </div>
+                   <div class="col-md-5">
+                     <div class="about_img">
+                        <figure><img srcset="{% static plant.plant_type.plant_type_image.url %}" alt="#"/>
+                        </figure>
+                     </div>
+                   </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row d_flex  m-5">
+             <h2 class="card-title  mb-4">Irrigation Schedule for {{ plant.name }}</h2>
+ 
+ <table class="table table-striped table-hover table-bordered text-center">
+     <thead class="table-dark">
+         <tr>
+             <th scope="col">Season</th>
+             <th scope="col">Irrigation Frequency</th>
+         </tr>
+     </thead>
+     <tbody>
+         <tr>
+             <td>Winter</td>
+             <td>{{ plant.plant_type.winter_irrigation_frequency }}</td>
+         </tr>
+         <tr>
+             <td>Spring</td>
+             <td>{{ plant.plant_type.spring_irrigation_frequency }}</td>
+         </tr>
+         <tr>
+             <td>Summer</td>
+             <td>{{ plant.plant_type.summer_irrigation_frequency }}</td>
+         </tr>
+         <tr>
+             <td>Fall</td>
+             <td>{{ plant.plant_type.fall_irrigation_frequency }}</td>
+         </tr>
+     </tbody>
+ </table>
+ 
+            </div>
+            <div class="row d_flex  m-5">
+             <div class="col-lg-6 col-md-12">
                  <div class="titlepage text_align_left">
-                    <span>Plant Details</span>
-                    <h2>{{ plant.name }}</h2>
-                    <p>Some description</p>
+                    
+                    <h2>AI Recommendation</h2>
+                    <p>Request an AI-based irrigation recommendation:</p>
                     
                  </div>
               </div>
               <div class="col-lg-6 col-md-12">
-                 <div class="row d_flex">
-                  <div class="col-md-7">
-                    <div class="about_img">
-                       <figure><img srcset="{% static plant.plant_image.url %}" alt="#"/>
-                       </figure>
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="about_img">
-                       <figure><img srcset="{% static plant.plant_type.plant_image.url %}" alt="#"/>
-                       </figure>
-                    </div>
-                  </div>
-                 </div>
+                 <form id="ai-recommendation-form" method="post">
+                     {% csrf_token %}
+                     {{ form.as_p }}
+                     <button class="btn btn-info" type="button" id="ai-recommendation-btn">Get Recommendation</button>
+                 </form>
+            
+                 <div id="ai-recommendation-result" style="margin-top: 1em; font-weight: bold;"></div>
+            
+                 <script>
+                     document.getElementById("ai-recommendation-btn").addEventListener("click", function() {
+                         const form = document.getElementById("ai-recommendation-form");
+                         const formData = new FormData(form);
+            
+                         fetch("{% url 'plant_detail' plant.id %}", {
+                             method: "POST",
+                             headers: {
+                                 "X-Requested-With": "XMLHttpRequest"
+                             },
+                             body: formData
+                         })
+                         .then(response => response.json())
+                         .then(data => {
+                             document.getElementById("ai-recommendation-result").innerText = data.recommendation;
+                         })
+                         .catch(error => console.error("Error:", error));
+                     });
+                 </script>
               </div>
-           </div>
-           <div class="row d_flex  m-5">
-            <table>
-                
-            </table>
-           </div>
-           <div class="row d_flex  m-5">
-            <div class="col-lg-6 col-md-12">
-                <div class="titlepage text_align_left">
-                   
-                   <h2>AI Recommendation</h2>
-                   <p>Request an AI-based irrigation recommendation:</p>
-                   
-                </div>
-             </div>
-             <div class="col-lg-6 col-md-12">
-                <form id="ai-recommendation-form" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button class="btn btn-info" type="button" id="ai-recommendation-btn">Get Recommendation</button>
-                </form>
-            
-                <div id="ai-recommendation-result" style="margin-top: 1em; font-weight: bold;"></div>
-            
-                <script>
-                    document.getElementById("ai-recommendation-btn").addEventListener("click", function() {
-                        const form = document.getElementById("ai-recommendation-form");
-                        const formData = new FormData(form);
-            
-                        fetch("{% url 'plant_detail' plant.id %}", {
-                            method: "POST",
-                            headers: {
-                                "X-Requested-With": "XMLHttpRequest"
-                            },
-                            body: formData
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            document.getElementById("ai-recommendation-result").innerText = data.recommendation;
-                        })
-                        .catch(error => console.error("Error:", error));
-                    });
-                </script>
-             </div>
     
-           </div>
-        </div>
-     </div>
+            </div>
+         </div>
+      </div>
+ 
 
        <!-- end Plant Detail -->
      

@@ -3,6 +3,8 @@
 {% load static %}
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
       data-sidebar-position="fixed" data-header-position="fixed">
+      <div class="body-wrapper">
+        <div class="container-fluid">
         <div class="container-fluid">
           <div class="container-fluid">
             <div class="card">
@@ -18,17 +20,110 @@
                     
                     
                     <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}  <!-- Render form fields -->
-                        <button type="submit">Save</button>
-                    </form>
-                    <a href="{% url 'plant_list' plant_type.id %}">Cancel</a>
+                      {% csrf_token %}
+                        <!-- Render form fields -->
+                        <div class="mb-3">
+                          <label for="name" class="form-label">Plant Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            placeholder="Enter plant type name"
+                            value="{{ form.name.value|default_if_none:'' }}"
+                          />
+                          {% if form.name.errors %}
+                          <div class="error">{{ form.name.errors }}</div>
+                          {% endif %}
+                        </div>
+                        <div class="mb-3">
+                          <label for="name" class="form-label">Plant image</label>
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="plant_image"
+                            name="plant_image"
+                           
+                            value="{{ form.plant_image.value|default_if_none:'' }}"
+                          />
+                         
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="plant_type" class="form-label">Plant Type</label>
+                          <select name="plant_type" id="plant_type" class="form-select">
+                              {% for plant_type in form.fields.plant_type.queryset %}
+                                  <option value="{{ plant_type.id }}" {% if form.plant_type.value == plant_type.id %}selected{% endif %}>
+                                      {{ plant_type.plant_type_name }}
+                                  </option>
+                              {% endfor %}
+                          </select>
+                      </div>
+
+                        <div class="col-5 mb-3">
+                          <label for="name" class="form-label">Sunlight requirements</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="sunlight_requirements"
+                            name="sunlight_requirements"
+                            placeholder="Enter Sunlight requirements"
+                            value="{{ form.sunlight_requirements.value|default_if_none:'' }}"
+                          />
+                          {% if form.sunlight_requirements.errors %}
+                          <div class="error">{{ form.sunlight_requirements.errors }}</div>
+                          {% else %}
+                          <span class="text-sm-center ti-space">Ex:8 (Sunlight)</span>
+                          {% endif %}
+                        </div>
+
+                        <div class="col-5 mb-3">
+                          <label for="name" class="form-label">Water needs</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="water_needs"
+                            name="water_needs"
+                            placeholder="Enter Water needs per litre"
+                            value="{{ form.water_needs.value|default_if_none:'' }}"
+                          />
+                          {% if form.water_needs.errors %}
+                          <div class="error">{{ form.water_needs.errors }}</div>
+                          {% else %}
+                          <span class="text-sm-center ti-space">Ex:1L </span>
+                          {% endif %}
+                        </div>
+
+                        <div class="col-5 mb-3">
+                          <label for="name" class="form-label">Growth rate</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="growth_rate"
+                            name="growth_rate"
+                            placeholder="Enter Growth rate"
+                            value="{{ form.growth_rate.value|default_if_none:'' }}"
+                          />
+                          {% if form.growth_rate.errors %}
+                          <div class="error">{{ form.growth_rate.errors }}</div>
+                          {% else %}
+                          <span class="text-sm-center ti-space">Ex:8 (scale from 0.1-1)</span>
+                          {% endif %}
+                        </div>
+
+                      <div class="btn group_btn">
+                        <button class="btn btn-info" type="submit">Save</button>
+                        <a class="text-warning" href="{% url 'plant_list' plant_type.id %}">Cancel</a>
+                      </div>
+                  </form>
                   </div>
                 </div>
                 
             </div>
           </div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
     <script src="{% static 'Admin/libs/jquery/dist/jquery.min.js' %}"></script>

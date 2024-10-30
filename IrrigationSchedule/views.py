@@ -78,6 +78,19 @@ def plant_create(request, plant_type_id):
 
 def plant_update(request, plant_type_id, pk):
     # Get the specified PlantType and Plant
+    plant_type = get_object_or_404(PlantType, id=plant_type_id)  # Fixed line
+    plant = get_object_or_404(Plant, pk=pk, plant_type=plant_type)  # Ensure the plant belongs to the correct PlantType
+
+    if request.method == 'POST':
+        form = PlantForm(request.POST, instance=plant)
+        if form.is_valid():
+            form.save()
+            return redirect('plant_list', plant_type_id=plant_type.id)  # Redirect to plant list for this PlantType
+    else:
+        form = PlantForm(instance=plant)
+
+    return render(request, 'Admin/IrrigationSchedule/plant_form.html', {'form': form, 'action': 'Update', 'plant_type': plant_type})
+    # Get the specified PlantType and Plant
     plant_type = get_object_or_404(PlantType, request.FILES, id=plant_type_id)
     plant = get_object_or_404(Plant, pk=pk, plant_type=plant_type)  # Ensure the plant belongs to the correct PlantType
 

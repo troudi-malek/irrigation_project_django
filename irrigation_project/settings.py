@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'soilCropRecommender',
     'IrrigationSchedule',
     'weatherAPP',
-    'UserApp'
+    'UserApp',
+    'SoilType'
 ]
 
 MIDDLEWARE = [

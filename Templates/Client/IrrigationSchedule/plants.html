@@ -70,11 +70,11 @@
             {% for plant in plants %}
               <div class=" col-md-4">
                  <div class="latest box_desho">
-                    <figure><img srcset="{% static plant.plant_image.url %}" alt="#"/></figure>
+                    <figure><img srcset="{% static plant.plant_type.plant_type_image.url %}" alt="#"/></figure>
                     <span>{{ plant.plant_type.plant_type_name }}</span>
                     <div class="nostrud">
                        <h3>{{ plant.name }}</h3>
-                       <p>has a more-or-less normal distribution of letters, </p>
+                       <p>{{ plant.name }} is a small, with growth rate: {{ plant.growth_rate }} growing plant, and water need: {{ plant.water_needs }} (liter/m² per week).</p>
                        <a class="read_more" href="{% url 'plant_detail' plant.id %}">Select</a>
                     </div>
                  </div>
